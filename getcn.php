@@ -28,14 +28,13 @@ if ($ldapBindAdmin){
     $attributes = array("cn", "telephonenumber", "mail", "uid");
     $result = ldap_search($ldap_conn, $baseDN, $filter, $attributes);
     $entries = ldap_get_entries($ldap_conn, $result);  
-    $userDN = $entries[0]["cn"][0];  
+    $userCn = $entries[0]["cn"][0];  
     echo ('<p style="color:green;">Username used (uid): '.$username.'</p>');
-    echo ('<p style="color:green;">I have the user DN: '.$userDN.'</p>');
+    echo ('<p style="color:green;">I have the user cn: '.$userCn.'</p>');
         
 //Okay, we're in! But now we need bind the user now that we have the user's DN
 //$ldapBindUSER = ldap_bind($ldap_conn, $userDN, $userpass);
-//$ldapbindUSER = ldap_bind($ldap_conn, "$userDN" . "$baseDN", $userpass);
-  $ldapbindUSER = ldap_bind($ldap_conn, "cn=$userDN".','.$baseDN, $userpass);
+  $ldapbindUSER = ldap_bind($ldap_conn, "cn=$userCn".','.$baseDN, $userpass);
     if($ldapbindUSER){
         echo ("<p style='color: green;'>User binding and authentication successful!!!</p>");        
         ldap_unbind($ldap_conn); // Clean up after ourselves.
