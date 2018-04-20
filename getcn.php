@@ -6,6 +6,7 @@ $adminDN = "cn=Lakis Lalakis,dc=domain,dc=com";//this is the admin distinguished
 $adminPswd = "ll12344";
 $username = 'llakis';//this is the user samaccountname
 $userpass = 'll1234';
+
 $ldap_conn = ldap_connect('ldap://ds.domain.com');//I'm using LDAPS here
 ldap_set_option($ldap_conn->ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 if (! $ldap_conn) {
@@ -14,10 +15,12 @@ if (! $ldap_conn) {
 else {    
         echo ("<p style='color: green;'>Connection to LDAP service successful!</p>");
      }
+
 //If we want anonymous bind:
 //$ldapBindAdmin = ldap_bind($ldap_conn);
 //Else: The first step is to bind the administrator so that we can search user info
 $ldapBindAdmin = ldap_bind($ldap_conn, $adminDN, $adminPswd);
+
 if ($ldapBindAdmin){
     echo ("<p style='color: green;'>Admin binding and authentication successful!!!</p>");
     $filter = '(uid='.$username.')';
@@ -28,6 +31,7 @@ if ($ldapBindAdmin){
     $userDN = $entries[0]["cn"][0];  
     echo ('<p style="color:green;">Username used (uid): '.$username.'</p>');
     echo ('<p style="color:green;">I have the user DN: '.$userDN.'</p>');
+        
 //Okay, we're in! But now we need bind the user now that we have the user's DN
 //$ldapBindUSER = ldap_bind($ldap_conn, $userDN, $userpass);
 //$ldapbindUSER = ldap_bind($ldap_conn, "$userDN" . "$baseDN", $userpass);
