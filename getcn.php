@@ -24,11 +24,14 @@ $ldapBindAdmin = ldap_bind($ldap_conn, $adminDN, $adminPswd);
 if ($ldapBindAdmin){
     echo ("<p style='color: green;'>Admin binding and authentication successful!!!</p>");
     $filter = '(uid='.$username.')';
-    //Get some attributes, we only  need "cn" for this example
+//Get some attributes, we only  need "cn" for this example
+//  $attributes = array("name", "telephonenumber", "mail", "uid");
     $attributes = array("cn", "telephonenumber", "mail", "uid");
     $result = ldap_search($ldap_conn, $baseDN, $filter, $attributes);
     $entries = ldap_get_entries($ldap_conn, $result);  
-    $userCn = $entries[0]["cn"][0];  
+//  $userDN = $entries[0]["name"][0]; 
+    $userCn = $entries[0]["cn"][0];
+
     echo ('<p style="color:green;">Username used (uid): '.$username.'</p>');
     echo ('<p style="color:green;">I have the user cn: '.$userCn.'</p>');
         
